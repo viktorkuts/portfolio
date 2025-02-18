@@ -14,9 +14,7 @@ import {
 import { useAuth0 } from "@auth0/auth0-vue";
 import { useUser } from "./utils/userProvider";
 import { UserType } from "./utils/models/User";
-import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useStorage } from "@vueuse/core";
 
 const auth0 = useAuth0();
 const { user, isLoading } = useUser();

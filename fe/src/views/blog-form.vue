@@ -2,8 +2,6 @@
 import { ref } from "vue";
 import { useFetch } from "@/utils/fetch";
 import type { BlogPostResponse } from "@/utils/models/BlogModel";
-import Banner from "@/components/shared/Banner.vue";
-import { AlertType } from "@/utils/models/Shared";
 import router from "@/utils/router";
 import { useAuth0 } from "@auth0/auth0-vue";
 
@@ -15,7 +13,7 @@ const token = auth0.getAccessTokenSilently();
 
 const submit = async () => {
   try {
-    const response = await useFetch<BlogPostResponse>(
+    useFetch<BlogPostResponse>(
       `${import.meta.env.BACKEND_URL}/api/v1/blog/posts`,
       {
         method: "POST",

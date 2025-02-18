@@ -1,6 +1,3 @@
-import { useStorage } from "@vueuse/core";
-import { ref, type Ref } from "vue";
-
 export enum Visibility {
   PRIVATE,
   PUBLIC,

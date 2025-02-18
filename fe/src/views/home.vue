@@ -3,12 +3,10 @@ import Card from "@/components/Card.vue";
 import { useFetch } from "@/utils/fetch";
 import type { CommentResponse } from "@/utils/models/Comments";
 import type { ResumeResponse } from "@/utils/models/ResumeModel";
-import { UserType, type UserResponse } from "@/utils/models/User";
+import { UserType } from "@/utils/models/User";
 import router from "@/utils/router";
-import { useUser } from "@/utils/userProvider";
 import { useAuth0 } from "@auth0/auth0-vue";
-import { computed, watch } from "vue";
-import type { ShallowRef } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 const props = defineProps(["sysuser"]);
 const { data: resume, error: errorResume } = useFetch<ResumeResponse>(

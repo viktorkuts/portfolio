@@ -14,16 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from "vue";
+import { ref } from "vue";
 import { useFetch } from "@/utils/fetch";
 import { useAuth0 } from "@auth0/auth0-vue";
 import router from "@/utils/router";
-import type { UserResponse } from "@/utils/models/User";
-
-// Define props
-const props = defineProps<{
-  sysuser: UserResponse;
-}>();
 
 const title = ref("");
 const comment = ref("");
