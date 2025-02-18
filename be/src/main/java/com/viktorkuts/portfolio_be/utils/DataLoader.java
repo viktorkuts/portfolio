@@ -33,7 +33,7 @@ public class DataLoader implements CommandLineRunner {
                         .id("1")
                         .email("vik.kuts@hotmail.com")
                         .type(UserType.USER)
-                        .associatedId("google-oauth2|111158373482141727647")
+                        .associatedId("auth0|67b4b660b5bdf73d9a1f401b")
                         .userInfo(
                                 UserInfo.builder()
                                         .firstName("Viktor")
