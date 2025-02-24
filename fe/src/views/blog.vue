@@ -4,6 +4,9 @@ import { useFetch } from "@/utils/fetch";
 import BlogPost from "@/components/blog/BlogPost.vue";
 import type { BlogPostResponse } from "@/utils/models/BlogModel";
 import router from "@/utils/router";
+import { UserType } from "@/utils/models/User";
+
+const props = defineProps(["sysuser"]);
 
 const { data: posts, error } = useFetch<BlogPostResponse[]>(
   `${import.meta.env.BACKEND_URL}/api/v1/blog/posts`
@@ -19,7 +22,12 @@ const addBlogRedirect = () => {
 
 <template>
   <h1>Blog</h1>
-  <button @click="addBlogRedirect()">Add Blog Post</button>
+  <button
+    v-if="props.sysuser?.value?.type == UserType.USER"
+    @click="addBlogRedirect()"
+  >
+    Add Blog Post
+  </button>
   <div v-if="isLoading">Loading...</div>
   <div v-else-if="error">Error loading posts: {{ error.message }}</div>
   <div v-else-if="!hasPosts">No blog posts available!</div>

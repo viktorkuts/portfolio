@@ -66,7 +66,7 @@ const submit = async () => {
       <label for="lastname">{{ $t("lastname") }}</label>
       <input id="lastname" v-model="lastname" required />
     </div>
-    <div class="input-group">
+    <!-- <div class="input-group">
       <label for="phone">{{ $t("phone") }}</label>
       <input id="phone" v-model="phone" type="tel" required />
     </div>
@@ -89,7 +89,7 @@ const submit = async () => {
     <div class="input-group">
       <label for="country">{{ $t("country") }}</label>
       <input id="country" v-model="address.country" required />
-    </div>
+    </div> -->
     <button type="submit">{{ $t("register") }}</button>
   </form>
 </template>
