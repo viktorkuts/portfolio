@@ -1,0 +1,15 @@
+{
+  "home": "Home",
+  "contact": "Contact",
+  "admin": "Admin",
+  "user-profile": "User Profile",
+  "contact-me": "Contact Me",
+  "login": "Login",
+  "logout": "Logout",
+  "you-need-to-fill-out-some-information-before-you-are-able-to-post-testimonials-or-send-email": "You need to fill out some information before you are able to post testimonials or send email",
+  "profile-registration": "Profile Registration",
+  "invalid-email": "Invalid Email",
+  "first-name": "First Name",
+  "last-name": "Last Name",
+  "submit": "Submit"
+}

@@ -19,4 +19,7 @@ public class Resume {
     private UserInfo contactInfo;
     private String userId;
     private ResumeStatus status;
+    private String title;
+    private String description;
+    private String avatar;
 }

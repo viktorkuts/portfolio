@@ -2,6 +2,7 @@ package com.viktorkuts.portfolio_be.work.logiclayer;
 
 import com.viktorkuts.portfolio_be.users.datalayer.User;
 import com.viktorkuts.portfolio_be.work.datalayer.Resume;
+import com.viktorkuts.portfolio_be.work.presentationlayer.models.InfoPatch;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeRequest;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeResponse;
 import reactor.core.publisher.Flux;
@@ -14,4 +15,5 @@ public interface ResumeService {
     Mono<Resume> getResumeById(String id);
     Mono<Resume> getMainResume();
     Mono<Resume> addResume(Mono<ResumeRequest> resume, String userId);
+    Mono<Resume> patchInfo(InfoPatch patch);
 }

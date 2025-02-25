@@ -16,6 +16,9 @@ public class ResumeResponse {
     private String userId;
     private List<Work> works;
     private ResumeStatus status;
+    private String title;
+    private String description;
+    private String avatar;
 
     public static ResumeResponse from(Resume resume) {
         ResumeResponse resumeResponse = new ResumeResponse();

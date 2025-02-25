@@ -11,4 +11,13 @@ export interface ResumeResponse {
   userId: string;
   works: WorkResponse[];
   status: ResumeStatus;
+  title: string;
+  description: string;
+  avatar: string;
+}
+
+export interface PatchInfo {
+  title: string;
+  description: string;
+  avatar: string;
 }

@@ -9,12 +9,11 @@ export interface UserInfo {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
-  address: Address;
+  phone?: string;
+  address?: Address;
 }
 
 export interface UserResponse {
-  [x: string]: any;
   email: string;
   type: UserType;
   userInfo: UserInfo;

@@ -1,10 +1,12 @@
 package com.viktorkuts.portfolio_be.work.logiclayer;
 
 import com.viktorkuts.portfolio_be.users.datalayer.User;
+import com.viktorkuts.portfolio_be.users.datalayer.UserRepository;
 import com.viktorkuts.portfolio_be.work.datalayer.Resume;
 import com.viktorkuts.portfolio_be.work.datalayer.ResumeRepository;
 import com.viktorkuts.portfolio_be.work.datalayer.ResumeStatus;
 import com.viktorkuts.portfolio_be.work.datalayer.WorkRepository;
+import com.viktorkuts.portfolio_be.work.presentationlayer.models.InfoPatch;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeRequest;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeResponse;
 import org.springframework.beans.BeanUtils;
@@ -16,10 +18,12 @@ import reactor.core.publisher.Mono;
 public class ResumeServiceImpl implements ResumeService {
     private final ResumeRepository resumeRepository;
     private final WorkRepository workRepository;
+    private final UserRepository userRepository;
 
-    public ResumeServiceImpl(ResumeRepository resumeRepository, WorkRepository workRepository) {
+    public ResumeServiceImpl(ResumeRepository resumeRepository, WorkRepository workRepository, UserRepository userRepository) {
         this.resumeRepository = resumeRepository;
         this.workRepository = workRepository;
+        this.userRepository = userRepository;
     }
 
     public Mono<ResumeResponse> prepare(Resume resume) {
@@ -30,7 +34,13 @@ public class ResumeServiceImpl implements ResumeService {
                         .map(w -> {
                             r.setWorks(w);
                             return r;
-                        }));
+                        }))
+                .flatMap(r -> userRepository.findUserById(resume.getUserId())
+                        .map(u -> {
+                            r.setUser(u.getUserInfo());
+                            return r;
+                        })
+                );
 
     }
 
@@ -63,5 +73,17 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public Mono<Resume> getMainResume() {
         return getMainResumeByUserId("1");
+    }
+
+    @Override
+    public Mono<Resume> patchInfo(InfoPatch patch) {
+        return getMainResume()
+                .map(r -> {
+                    r.setTitle(patch.getTitle());
+                    r.setDescription(patch.getDescription());
+                    r.setAvatar(patch.getAvatar());
+                    return r;
+                })
+                .flatMap(resumeRepository::save);
     }
 }
