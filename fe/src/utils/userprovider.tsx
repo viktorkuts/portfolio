@@ -27,7 +27,6 @@ type Props = {
 };
 
 export const UserProvider = ({ children }: Props) => {
-  const { t } = useTranslation();
   const userService = useUserService();
   const { user, isAuthenticated } = useAuth0();
   const [sysUser, setSysUser] = useState<UserResponse | undefined>();

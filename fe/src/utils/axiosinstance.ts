@@ -1,4 +1,4 @@
-import { AuthenticationError, OAuthError, useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios, { AxiosInstance } from "axios";
 
 export const useAxiosInstance = (): AxiosInstance => {

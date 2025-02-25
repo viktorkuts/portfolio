@@ -1,10 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
-import { useLocation, useNavigate, useHistory } from "react-router";
 
-type Props = {};
-
-export const AuthHandler = (props: Props) => {
+export const AuthHandler = () => {
   const { isLoading, user, loginWithRedirect, logout, handleRedirectCallback } =
     useAuth0();
 

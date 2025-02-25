@@ -32,9 +32,9 @@ export function Navbar() {
     ...(user?.type === UserType.USER
       ? [{ link: "/admin", label: t("admin") }]
       : []),
-    ...(isAuthenticated
-      ? [{ link: "/user-profile", label: t("user-profile") }]
-      : []),
+    // ...(isAuthenticated
+    //   ? [{ link: "/user-profile", label: t("user-profile") }]
+    //   : []),
     { link: "/auth", label: isAuthenticated ? t("logout") : t("login") },
   ];
 
