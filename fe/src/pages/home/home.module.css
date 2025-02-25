@@ -1,0 +1,48 @@
+:global(body) {
+  margin: 0;
+  padding: 0;
+  background-color: #0c0b0b;
+}
+
+.container {
+  @mixin larger-than $mantine-breakpoint-md {
+    display: grid;
+    height: 100%;
+  }
+  position: relative;
+  margin: 0;
+}
+
+.aside {
+  @mixin larger-than $mantine-breakpoint-md {
+    height: 100vh;
+    position: fixed;
+    width: 33%;
+  }
+  padding: 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--mantine-color-body);
+  border-bottom: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--mantine-primary-color-contrast);
+  margin-top: 56px;
+  margin-left: 33%;
+  padding: 2rem;
+  width: 67%;
+  right: 0;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    margin-top: 0;
+    margin-left: 0;
+    width: 100%;
+  }
+}

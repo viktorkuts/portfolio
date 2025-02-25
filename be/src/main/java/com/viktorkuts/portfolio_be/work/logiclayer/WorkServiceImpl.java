@@ -1,11 +1,15 @@
 package com.viktorkuts.portfolio_be.work.logiclayer;
 
+import com.viktorkuts.portfolio_be.shared.LocalizableString;
+import com.viktorkuts.portfolio_be.utils.exceptions.NotFoundException;
 import com.viktorkuts.portfolio_be.work.datalayer.ResumeRepository;
 import com.viktorkuts.portfolio_be.work.datalayer.Work;
 import com.viktorkuts.portfolio_be.work.datalayer.WorkRepository;
+import com.viktorkuts.portfolio_be.work.presentationlayer.models.WorkRequest;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.WorkResponse;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class WorkServiceImpl implements WorkService {
@@ -31,5 +35,37 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public Flux<Work> getAllPublicSelfWorks() {
         return getAllWorksByUserId("1");
+    }
+    @Override
+    public Mono<Work> addWorkForMain(Mono<WorkRequest> workRequest){
+        return workRequest
+                .map(e -> {
+                    Work work = new Work();
+                    work.setCompany(e.getCompany());
+                    work.setDescription(e.getDescription());
+                    work.setPosition(e.getPosition());
+                    work.setResumeId("1");
+                    return work;
+                })
+                .flatMap(workRepository::save);
+    }
+    @Override
+    public Mono<Void> deleteWork(String workId){
+        return workRepository.getWorkById(workId)
+                .switchIfEmpty(Mono.error(new NotFoundException("Work not found")))
+                .flatMap(workRepository::delete);
+    }
+
+    @Override
+    public Mono<Work> updateWorkForMain(String workId, WorkRequest workRequest) {
+        return workRepository.getWorkById(workId)
+                .switchIfEmpty(Mono.error(new NotFoundException("Work not found")))
+                .map(work -> {
+                    work.setCompany(workRequest.getCompany());
+                    work.setDescription(workRequest.getDescription());
+                    work.setPosition(workRequest.getPosition());
+                    return work;
+                })
+                .flatMap(workRepository::save);
     }
 }

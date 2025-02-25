@@ -1,0 +1,5 @@
+.dashboard {
+  margin-top: 56px;
+  padding: 2rem;
+  color: var(--mantine-primary-color-contrast);
+}

@@ -25,8 +25,3 @@ export interface UserInfo {
   phone: string;
   address: Address;
 }
-
-export interface LocalizableString {
-  original: string;
-  french: string;
-}

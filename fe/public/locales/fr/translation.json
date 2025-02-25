@@ -1,0 +1,15 @@
+{
+  "admin": "Admin",
+  "contact": "Contact",
+  "home": "Accueil",
+  "user-profile": "Profil",
+  "contact-me": "Me Contacter",
+  "login": "Se Connecter",
+  "logout": "Fermer la session",
+  "you-need-to-fill-out-some-information-before-you-are-able-to-post-testimonials-or-send-email": "Il nous faut quelques informations sur vous pour pouvoir laisser des commentaires et envoyer des courriels",
+  "profile-registration": "Registraire de Profil",
+  "first-name": "Prénom",
+  "invalid-email": "E-mail non valide",
+  "last-name": "Nom de famille",
+  "submit": "Soumettre"
+}

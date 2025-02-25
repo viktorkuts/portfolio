@@ -69,6 +69,9 @@ public class DataLoader implements CommandLineRunner {
                                         .lastName("Kuts")
                                         .build()
                         )
+                        .title("3rd year studento")
+                        .description("Hi, I'm Viktor.")
+                        .avatar("https://scontent-bos5-1.cdninstagram.com/v/t51.2885-19/398900693_720328643334718_7061985101272469118_n.jpg?stp=dst-jpg_s320x320_tt6&_nc_ht=scontent-bos5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2AFnM7f6ijHla3ewCov1RixfIDahi1BfAnW0xie6HMFL77Pv33ild983YwjKH9Mqz08&_nc_ohc=V8Lc5Qk3eJgQ7kNvgEb_T0T&_nc_gid=17894708ee5846138c2ba06df131e743&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AYD2TB8eUKGPY9F0uY1Sbwz5rwwz4906AKQGFd6nAXfVew&oe=67C3B8EC&_nc_sid=8b3546")
                         .build()
         );
 
@@ -77,15 +80,8 @@ public class DataLoader implements CommandLineRunner {
         works.add(
                 Work.builder()
                         .id("1")
-                        .position(LocalizableString.builder()
-                                .original("Typer")
-                                .french("Le tappeur")
-                                .build()
-                        )
-                        .description(LocalizableString.builder()
-                                .original("Learned how to type on a keyboard, how to use a computer")
-                                .french("Appris comment utiliser un clavier et l'ordinateur")
-                                .build())
+                        .position("Typer")
+                        .description("Learned how to type on a keyboard, how to use a computer")
                         .status(WorkStatus.PRESENT)
                         .company(
                                 Company.builder()

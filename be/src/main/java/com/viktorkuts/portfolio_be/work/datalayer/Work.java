@@ -23,9 +23,10 @@ public class Work {
     private Address location;
     private Instant functionStart;
     private Instant functionEnd;
-    private LocalizableString position;
+    private String emoji;
+    private String position;
     private WorkStatus status;
-    private LocalizableString description;
+    private String description;
     private Company company;
     private UserInfo contactPerson;
     private String resumeId;

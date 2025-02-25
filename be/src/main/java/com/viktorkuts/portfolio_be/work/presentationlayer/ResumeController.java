@@ -1,9 +1,13 @@
 package com.viktorkuts.portfolio_be.work.presentationlayer;
 
 import com.viktorkuts.portfolio_be.users.logiclayer.UserService;
+import com.viktorkuts.portfolio_be.work.datalayer.Work;
 import com.viktorkuts.portfolio_be.work.logiclayer.ResumeService;
+import com.viktorkuts.portfolio_be.work.logiclayer.WorkService;
+import com.viktorkuts.portfolio_be.work.presentationlayer.models.InfoPatch;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeRequest;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeResponse;
+import com.viktorkuts.portfolio_be.work.presentationlayer.models.WorkRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,10 +20,12 @@ import reactor.core.publisher.Mono;
 public class ResumeController {
     private final UserService userService;
     private final ResumeService resumeService;
+    private final WorkService workService;
 
-    public ResumeController(UserService userService, ResumeService resumeService) {
+    public ResumeController(UserService userService, ResumeService resumeService, WorkService workService) {
         this.userService = userService;
         this.resumeService = resumeService;
+        this.workService = workService;
     }
 
     @GetMapping("/{userId}")
@@ -40,6 +46,31 @@ public class ResumeController {
         return userService.getUserByJwt(jwt.getToken())
                 .switchIfEmpty(Mono.error(new AuthenticationCredentialsNotFoundException("Could not find user with token")))
                 .flatMap(user -> resumeService.addResume(requestMono, user.getId()))
+                .flatMap(resumeService::prepare);
+    }
+
+    @PostMapping("/main/works")
+    @PreAuthorize("hasAuthority('USER')")
+    public Mono<Work> addWorkToMainResume(@RequestBody Mono<WorkRequest> requestMono) {
+        return workService.addWorkForMain(requestMono);
+    }
+
+    @DeleteMapping("/main/works/{workId}")
+    @PreAuthorize("hasAuthority('USER')")
+    public Mono<Void> deleteWorkFromMainResume(@PathVariable String workId) {
+        return workService.deleteWork(workId);
+    }
+
+    @PutMapping("/main/works/{workId}")
+    @PreAuthorize("hasAuthority('USER')")
+    public Mono<Work> updateWorkToMainResume(@PathVariable String workId, @RequestBody WorkRequest requestMono) {
+        return workService.updateWorkForMain(workId, requestMono);
+    }
+
+    @PatchMapping("/main/info")
+    @PreAuthorize("hasAuthority('USER')")
+    public Mono<ResumeResponse> patchInfo(@RequestBody InfoPatch rq){
+        return resumeService.patchInfo(rq)
                 .flatMap(resumeService::prepare);
     }
 }
