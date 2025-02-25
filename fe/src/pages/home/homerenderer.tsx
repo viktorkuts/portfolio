@@ -19,7 +19,7 @@ export const HomeRenderer = () => {
         <Title>Work Experience</Title>
         <Divider size="sm" w="100%" />
         <Accordion defaultValue="No work experience" w="100%">
-          {(!resume || resume.works.length < 1) && (
+          {(!resume || resume?.works || resume.works.length < 1) && (
             <Title order={5}>No work experience yet!</Title>
           )}
           {resume?.works.map((work, index) => (
