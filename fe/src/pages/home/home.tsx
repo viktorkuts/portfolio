@@ -1,7 +1,20 @@
 import { ReactElement } from "react";
 import styles from "./home.module.css";
-import { Avatar, Card, Skeleton, Spoiler, Title } from "@mantine/core";
+import {
+  Avatar,
+  Button,
+  Card,
+  Group,
+  Image,
+  Skeleton,
+  Spoiler,
+  Title,
+  Tooltip,
+} from "@mantine/core";
 import { useDataContext } from "@/utils/dataprovider";
+import { generateImageUrl } from "@/utils/models/Shared";
+import { useTranslation } from "react-i18next";
+import { IconDownload } from "@tabler/icons-react";
 
 type Props = {
   children: ReactElement;
@@ -9,6 +22,7 @@ type Props = {
 
 export const Home = ({ children }: Props) => {
   const { resume, testimonials, isLoading } = useDataContext();
+  const { i18n } = useTranslation();
   return (
     <div className={styles.container}>
       <aside className={styles.aside}>
@@ -21,14 +35,39 @@ export const Home = ({ children }: Props) => {
           </>
         ) : (
           <>
-            <Avatar radius="15em" size="15em" src={resume?.avatar} />
+            <Avatar
+              radius="15em"
+              size="15em"
+              src={generateImageUrl(resume?.avatar)}
+            />
             <Title>
               {resume?.user?.firstName} {resume?.user?.lastName}
             </Title>
             <Title order={2}>{resume?.title}</Title>
-            <Spoiler maxHeight={50} showLabel="Read more" hideLabel="Hide">
+            <Spoiler
+              maxHeight={50}
+              showLabel="Read more"
+              hideLabel="Hide"
+              mb="xl"
+            >
               {resume?.description}
             </Spoiler>
+            <Button
+              component="a"
+              href={`${import.meta.env.VITE_MINIO_URL}/${import.meta.env.VITE_MINIO_BUCKET}/CV-int${i18n.language == "fr" ? "-french" : ""}.pdf`}
+              target="_blank"
+              rightSection={<IconDownload size={20} />}
+              mb="lg"
+            >
+              CV
+            </Button>
+            <Group>
+              {resume?.skills?.map((s) => (
+                <Tooltip label={s.name}>
+                  <Image w="3em" src={generateImageUrl(s.icon)} />
+                </Tooltip>
+              ))}
+            </Group>
           </>
         )}
       </aside>

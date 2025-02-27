@@ -8,6 +8,7 @@ export const AuthHandler = () => {
   handleRedirectCallback();
 
   useEffect(() => {
+    console.log(user, isLoading);
     if (!isLoading && !user) {
       loginWithRedirect();
     } else {

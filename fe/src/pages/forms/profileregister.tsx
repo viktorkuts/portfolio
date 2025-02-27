@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   Container,
-  Group,
   LoadingOverlay,
   Text,
   TextInput,
@@ -24,7 +23,7 @@ import { UserInfo } from "@/utils/models/User";
 
 export const ProfileRegister = () => {
   const userService = useUserService();
-  const { user } = useUserContext();
+  const { user, refresh } = useUserContext();
   const { isAuthenticated } = useAuth0();
   const nav = useNavigate();
   const [visible, { close, open }] = useDisclosure(false);
@@ -44,20 +43,26 @@ export const ProfileRegister = () => {
     },
   });
 
-  const submit = async (val: UserInfo) => {
-    try {
-      open();
-      await userService.registerProfile(val);
-      nav("/");
-    } catch (e) {
-      if (e instanceof AxiosError) {
-        setError(`There was an error: ${e.response?.data.message}`);
-      } else {
-        setError(`There was an unexpected error, please try again later: ${e}`);
+  const submit = (val: UserInfo) => {
+    const send = async () => {
+      try {
+        open();
+        await userService.registerProfile(val);
+        nav("/");
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          setError(`There was an error: ${e.response?.data.message}`);
+        } else {
+          setError(
+            `There was an unexpected error, please try again later: ${e}`
+          );
+        }
+      } finally {
+        close();
+        refresh();
       }
-    } finally {
-      close();
-    }
+    };
+    send();
   };
 
   useEffect(() => {
@@ -66,22 +71,19 @@ export const ProfileRegister = () => {
   }, [nav, user, isAuthenticated]);
 
   return (
-    <Container
-      w="100%"
-      component="form"
-      onSubmit={() => {
-        form.onSubmit((val) => {
-          submit(val);
-        });
-      }}
-    >
+    <Container w="100%">
       <Title>{t("profile-registration")}</Title>
       <Text>
         {t(
           "you-need-to-fill-out-some-information-before-you-are-able-to-post-testimonials-or-send-email"
         )}
       </Text>
-      <Card className={style.card} pos="relative">
+      <Card
+        className={style.card}
+        pos="relative"
+        component="form"
+        onSubmit={form.onSubmit(submit)}
+      >
         <Alert variant="light" color="red" title="Error" hidden={error == ""}>
           {error}
         </Alert>
@@ -110,9 +112,9 @@ export const ProfileRegister = () => {
           type="email"
         />
 
-        <Group justify="flex-end" mt="md">
-          <Button type="submit">{t("submit")}</Button>
-        </Group>
+        <Button type="submit" mt="md">
+          {t("submit")}
+        </Button>
       </Card>
     </Container>
   );

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 interface UserContextInterface {
   user: UserResponse | undefined;
   isLoading: boolean;
+  refresh: () => void;
 }
 
 const UserContext = createContext<UserContextInterface | undefined>(undefined);
@@ -33,7 +34,7 @@ export const UserProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const nav = useNavigate();
 
-  useEffect(() => {
+  const refresh = () => {
     setIsLoading(true);
     if (isAuthenticated && user) {
       userService
@@ -48,12 +49,22 @@ export const UserProvider = ({ children }: Props) => {
         });
     }
     setIsLoading(false);
+  };
+
+  useEffect(() => {
+    refresh();
     // only run the call if the auth0 state changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isAuthenticated]);
 
   return (
-    <UserContext.Provider value={{ user: sysUser, isLoading: isLoading }}>
+    <UserContext.Provider
+      value={{
+        user: sysUser,
+        isLoading: isLoading,
+        refresh: refresh,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

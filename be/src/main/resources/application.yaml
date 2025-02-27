@@ -21,6 +21,13 @@ portfolio:
     url: ${FRONTEND_URL}
 
 spring:
+  mail:
+    host: ${MAIL_SMTP_HOST}
+    port: ${MAIL_SMTP_PORT}
+    username: ${MAIL_SMTP_USER}
+    password: ${MAIL_SMTP_PASS}
+    protocol: smtp
+
   security:
     oauth2:
       resourceserver:
@@ -38,6 +45,14 @@ spring:
         provider:
           okta:
             issuer-uri: ${OKTA_ISSUER}
+
+minio:
+  url: ${MINIO_URL}
+  access:
+    name: ${MINIO_ACCESS}
+    secret: ${MINIO_SECRET}
+    bucket:
+      name: ${MINIO_BUCKET}
 
 ---
 

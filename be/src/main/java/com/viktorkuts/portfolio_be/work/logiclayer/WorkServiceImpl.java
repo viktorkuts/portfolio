@@ -43,8 +43,11 @@ public class WorkServiceImpl implements WorkService {
                     Work work = new Work();
                     work.setCompany(e.getCompany());
                     work.setDescription(e.getDescription());
+                    work.setDescriptionFr(e.getDescriptionFr());
                     work.setPosition(e.getPosition());
+                    work.setPositionFr(e.getPositionFr());
                     work.setResumeId("1");
+                    work.setImage(e.getImage());
                     return work;
                 })
                 .flatMap(workRepository::save);
@@ -64,6 +67,10 @@ public class WorkServiceImpl implements WorkService {
                     work.setCompany(workRequest.getCompany());
                     work.setDescription(workRequest.getDescription());
                     work.setPosition(workRequest.getPosition());
+                    work.setPositionFr(workRequest.getPositionFr());
+                    work.setDescriptionFr(workRequest.getDescriptionFr());
+                    work.setSkills(workRequest.getSkills());
+                    work.setImage(workRequest.getImage());
                     return work;
                 })
                 .flatMap(workRepository::save);

@@ -7,4 +7,5 @@ import reactor.core.publisher.Mono;
 public interface WorkRepository extends ReactiveMongoRepository<Work, String> {
     Flux<Work> getWorksByResumeId(String resumeId);
     Mono<Work> getWorkById(String id);
+    Mono<Work> getWorkBySkillsContaining(String skills);
 }

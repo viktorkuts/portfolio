@@ -62,7 +62,7 @@ export const DataProvider = ({ children }: Props) => {
         resume,
         testimonials,
         isLoading,
-        refresh: useDebouncedCallback(refresh, 100),
+        refresh: useDebouncedCallback(refresh, 200),
       }}
     >
       {children}

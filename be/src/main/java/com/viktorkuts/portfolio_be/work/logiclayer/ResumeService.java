@@ -5,6 +5,7 @@ import com.viktorkuts.portfolio_be.work.datalayer.Resume;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.InfoPatch;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeRequest;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeResponse;
+import com.viktorkuts.portfolio_be.work.presentationlayer.models.SkillRequest;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

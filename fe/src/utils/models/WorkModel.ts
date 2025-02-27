@@ -1,4 +1,4 @@
-import type { Address, UserInfo } from "./Shared";
+import type { Address, Image, Skill, UserInfo } from "./Shared";
 
 export enum WorkStatus {
   PRESENT,
@@ -18,15 +18,23 @@ export interface WorkResponse {
   functionStart: Date;
   functionEnd: Date;
   position: string;
+  positionFr: string;
   status: WorkStatus;
   description: string;
+  descriptionFr: string;
   company: Company;
   contactPerson: UserInfo;
   resumeId: string;
+  image: Image;
+  skills: Skill[];
 }
 
 export interface WorkRequest {
   position: string;
+  positionFr: string;
   description: string;
+  descriptionFr: string;
   company: Company;
+  image?: Image;
+  skills: string[];
 }

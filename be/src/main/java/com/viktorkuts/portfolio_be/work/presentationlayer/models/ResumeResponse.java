@@ -1,9 +1,8 @@
 package com.viktorkuts.portfolio_be.work.presentationlayer.models;
 
+import com.viktorkuts.portfolio_be.images.datalayer.Image;
 import com.viktorkuts.portfolio_be.shared.UserInfo;
-import com.viktorkuts.portfolio_be.work.datalayer.Resume;
-import com.viktorkuts.portfolio_be.work.datalayer.ResumeStatus;
-import com.viktorkuts.portfolio_be.work.datalayer.Work;
+import com.viktorkuts.portfolio_be.work.datalayer.*;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import reactor.core.publisher.Flux;
@@ -14,11 +13,13 @@ import java.util.List;
 public class ResumeResponse {
     private UserInfo user;
     private String userId;
-    private List<Work> works;
+    private List<WorkResponse> works;
     private ResumeStatus status;
     private String title;
     private String description;
-    private String avatar;
+    private Image avatar;
+    private List<Skill> skills;
+    private List<Project> projects;
 
     public static ResumeResponse from(Resume resume) {
         ResumeResponse resumeResponse = new ResumeResponse();

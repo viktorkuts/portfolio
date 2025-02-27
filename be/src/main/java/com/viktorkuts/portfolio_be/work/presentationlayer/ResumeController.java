@@ -4,15 +4,13 @@ import com.viktorkuts.portfolio_be.users.logiclayer.UserService;
 import com.viktorkuts.portfolio_be.work.datalayer.Work;
 import com.viktorkuts.portfolio_be.work.logiclayer.ResumeService;
 import com.viktorkuts.portfolio_be.work.logiclayer.WorkService;
-import com.viktorkuts.portfolio_be.work.presentationlayer.models.InfoPatch;
-import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeRequest;
-import com.viktorkuts.portfolio_be.work.presentationlayer.models.ResumeResponse;
-import com.viktorkuts.portfolio_be.work.presentationlayer.models.WorkRequest;
+import com.viktorkuts.portfolio_be.work.presentationlayer.models.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController

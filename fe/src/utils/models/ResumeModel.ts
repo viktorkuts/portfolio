@@ -1,4 +1,4 @@
-import type { UserInfo } from "./Shared";
+import type { Image, Skill, UserInfo } from "./Shared";
 import type { WorkResponse } from "./WorkModel";
 
 export enum ResumeStatus {
@@ -13,11 +13,11 @@ export interface ResumeResponse {
   status: ResumeStatus;
   title: string;
   description: string;
-  avatar: string;
+  avatar: Image;
+  skills: Skill[];
 }
 
 export interface PatchInfo {
   title: string;
   description: string;
-  avatar: string;
 }

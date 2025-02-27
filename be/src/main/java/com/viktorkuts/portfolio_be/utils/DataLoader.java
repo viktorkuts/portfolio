@@ -1,5 +1,6 @@
 package com.viktorkuts.portfolio_be.utils;
 
+import com.viktorkuts.portfolio_be.images.datalayer.Image;
 import com.viktorkuts.portfolio_be.shared.Address;
 import com.viktorkuts.portfolio_be.shared.LocalizableString;
 import com.viktorkuts.portfolio_be.shared.UserInfo;
@@ -11,17 +12,22 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DataLoader implements CommandLineRunner {
     private final UserRepository userRepository;
     private final ResumeRepository resumeRepository;
     private final WorkRepository workRepository;
+    private final SkillRepository skillRepository;
+    private final ProjectRepository projectRepository;
 
-    public DataLoader(UserRepository userRepository, ResumeRepository resumeRepository, WorkRepository workRepository) {
+    public DataLoader(UserRepository userRepository, ResumeRepository resumeRepository, WorkRepository workRepository, SkillRepository skillRepository, ProjectRepository projectRepository) {
         this.userRepository = userRepository;
         this.resumeRepository = resumeRepository;
         this.workRepository = workRepository;
+        this.skillRepository = skillRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -71,7 +77,8 @@ public class DataLoader implements CommandLineRunner {
                         )
                         .title("3rd year studento")
                         .description("Hi, I'm Viktor.")
-                        .avatar("https://scontent-bos5-1.cdninstagram.com/v/t51.2885-19/398900693_720328643334718_7061985101272469118_n.jpg?stp=dst-jpg_s320x320_tt6&_nc_ht=scontent-bos5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2AFnM7f6ijHla3ewCov1RixfIDahi1BfAnW0xie6HMFL77Pv33ild983YwjKH9Mqz08&_nc_ohc=V8Lc5Qk3eJgQ7kNvgEb_T0T&_nc_gid=17894708ee5846138c2ba06df131e743&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AYD2TB8eUKGPY9F0uY1Sbwz5rwwz4906AKQGFd6nAXfVew&oe=67C3B8EC&_nc_sid=8b3546")
+                        .avatar(Image.builder()
+                                .id("IMG_0060.jpeg").bucket("portfolio").build())
                         .build()
         );
 
@@ -90,13 +97,61 @@ public class DataLoader implements CommandLineRunner {
                                         .phone("1234567890")
                                         .build()
                         )
+                        .image(Image.builder().bucket("portfolio").id("John_Cena.webp").build())
                         .resumeId("1")
+                        .skills(List.of("1"))
+                        .build()
+        );
+
+        ArrayList<Skill> skills = new ArrayList<>();
+
+        skills.add(
+                Skill.builder()
+                        .id("1")
+                        .name("Lua")
+                        .icon(Image.builder()
+                                .bucket("portfolio")
+                                .id("Lua-Logo.svg")
+                                .build())
+                        .build()
+        );
+
+        ArrayList<Project> projects = new ArrayList<>();
+
+        projects.add(
+                Project.builder()
+                        .id("1")
+                        .name("Java")
+                        .description("Hello")
+                        .image(
+                                Image.builder()
+                                        .bucket("portfolio")
+                                        .id("Lua-Logo.svg")
+                                        .build()
+                        )
+                        .links(
+                                List.of(
+                                ProfileLink
+                                        .builder()
+                                        .url("https://google.com")
+                                        .label("Google")
+                                        .icon(
+                                                Image.builder()
+                                                        .bucket("portfolio")
+                                                        .id("Lua-Logo.svg")
+                                                        .build()
+                                        )
+                                        .build()
+                                )
+                        )
                         .build()
         );
 
         userRepository.saveAll(users).subscribe();
         resumeRepository.saveAll(resumes).subscribe();
         workRepository.saveAll(works).subscribe();
+        skillRepository.saveAll(skills).subscribe();
+        projectRepository.saveAll(projects).subscribe();
 
     }
 }

@@ -41,6 +41,7 @@ public class MailingController {
                 .flatMap(u -> {
                     msg.setTo(u.getEmail());
                     msg.setSubject("Portfolio - " + u.getUserInfo().getFirstName());
+                    msg.setText("Hello, " + u.getUserInfo().getFirstName() + ", here is the message you sent:\n" + content);
                     mailSender.send(msg);
                     return Mono.empty();
                 });

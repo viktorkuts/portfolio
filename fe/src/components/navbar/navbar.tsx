@@ -62,6 +62,10 @@ export function Navbar() {
       data-active={active === link.link || undefined}
       onClick={(event) => {
         event.preventDefault();
+        if (link.link == "/auth") {
+          navigate(link.link, { replace: true });
+          return;
+        }
         setActive(link.link);
         navigate(link.link);
       }}
@@ -83,7 +87,7 @@ export function Navbar() {
               setIsEnglish((val) => !val);
             }}
           >
-            <Badge>{isEnglish ? "EN" : "FR"}</Badge>
+            <Badge>{isEnglish ? "FR" : "EN"}</Badge>
             <IconWorld></IconWorld>
           </Button>
           <Burger
