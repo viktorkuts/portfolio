@@ -8,6 +8,7 @@ import {
   Container,
   Divider,
   Grid,
+  Group,
   Image,
   Space,
   Text,
@@ -64,37 +65,41 @@ export const HomeRenderer = () => {
                 {project.skills.length >= 1 && (
                   <Text mt="lg">{t("links")}</Text>
                 )}
-                {project.links.map((l, index) => (
-                  <Tooltip
-                    label={t("view-on-l-label", { value: l.label })}
-                    key={index}
-                  >
-                    <ActionIcon
-                      variant="primary"
-                      component="a"
-                      href={l.url}
-                      target="_blank"
+                <Group>
+                  {project.links.map((l, index) => (
+                    <Tooltip
+                      label={t("view-on-l-label", { value: l.label })}
+                      key={index}
                     >
-                      <Image w="1.5em" src={generateImageUrl(l.icon)} />
-                    </ActionIcon>
-                  </Tooltip>
-                ))}
+                      <ActionIcon
+                        variant="primary"
+                        component="a"
+                        href={l.url}
+                        target="_blank"
+                      >
+                        <Image w="1.5em" src={generateImageUrl(l.icon)} />
+                      </ActionIcon>
+                    </Tooltip>
+                  ))}
+                </Group>
                 {project.skills.length >= 1 && (
                   <Text mt="lg">{t("technologies-used")}</Text>
                 )}
-                {project?.skills.map((s) => (
-                  <Badge
-                    color="black"
-                    mb="0.5em"
-                    key={s.id}
-                    size="xl"
-                    leftSection={
-                      <Image w="1.5em" src={generateImageUrl(s.icon)} />
-                    }
-                  >
-                    {s.name}
-                  </Badge>
-                ))}
+                <Group>
+                  {project?.skills.map((s) => (
+                    <Badge
+                      color="black"
+                      mb="0.5em"
+                      key={s.id}
+                      size="xl"
+                      leftSection={
+                        <Image w="1.5em" src={generateImageUrl(s.icon)} />
+                      }
+                    >
+                      {s.name}
+                    </Badge>
+                  ))}
+                </Group>
               </Card>
             </Grid.Col>
           ))}
@@ -145,19 +150,21 @@ export const HomeRenderer = () => {
                 {work.skills.length >= 1 && (
                   <Text mt="lg">{t("technologies-used")}</Text>
                 )}
-                {work?.skills.map((s) => (
-                  <Badge
-                    color="black"
-                    mb="0.5em"
-                    key={s.id}
-                    size="xl"
-                    leftSection={
-                      <Image w="1.5em" src={generateImageUrl(s.icon)} />
-                    }
-                  >
-                    {s.name}
-                  </Badge>
-                ))}
+                <Group>
+                  {work?.skills.map((s) => (
+                    <Badge
+                      color="black"
+                      mb="0.5em"
+                      key={s.id}
+                      size="xl"
+                      leftSection={
+                        <Image w="1.5em" src={generateImageUrl(s.icon)} />
+                      }
+                    >
+                      {s.name}
+                    </Badge>
+                  ))}
+                </Group>
               </Card>
             </Grid.Col>
           ))}
