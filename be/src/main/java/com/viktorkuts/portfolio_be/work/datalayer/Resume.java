@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document("resumes")
@@ -24,5 +25,9 @@ public class Resume {
     private ResumeStatus status;
     private String title;
     private String description;
+    private String titleFr;
+    private String descriptionFr;
     private Image avatar;
+    @Builder.Default
+    private List<ProfileLink> links = new ArrayList<>();
 }

@@ -16,10 +16,13 @@ public class ResumeResponse {
     private List<WorkResponse> works;
     private ResumeStatus status;
     private String title;
+    private String titleFr;
     private String description;
+    private String descriptionFr;
     private Image avatar;
     private List<Skill> skills;
-    private List<Project> projects;
+    private List<ProjectResponse> projects;
+    private List<ProfileLink> links;
 
     public static ResumeResponse from(Resume resume) {
         ResumeResponse resumeResponse = new ResumeResponse();

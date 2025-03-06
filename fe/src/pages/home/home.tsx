@@ -39,18 +39,25 @@ export const Home = ({ children }: Props) => {
               radius="15em"
               size="15em"
               src={generateImageUrl(resume?.avatar)}
+              mb="lg"
             />
             <Title>
               {resume?.user?.firstName} {resume?.user?.lastName}
             </Title>
-            <Title order={2}>{resume?.title}</Title>
+            <Title order={2}>
+              {i18n.language == "fr" && resume.titleFr
+                ? resume.titleFr
+                : resume.title}
+            </Title>
             <Spoiler
               maxHeight={50}
               showLabel="Read more"
               hideLabel="Hide"
               mb="xl"
             >
-              {resume?.description}
+              {i18n.language == "fr" && resume.descriptionFr
+                ? resume.descriptionFr
+                : resume.description}
             </Spoiler>
             <Button
               component="a"
@@ -61,9 +68,18 @@ export const Home = ({ children }: Props) => {
             >
               CV
             </Button>
+            <Group mb="md">
+              {resume?.links?.map((l, index) => (
+                <Tooltip label={l.label} key={index}>
+                  <a href={l.url} target="_blank">
+                    <Image w="3em" src={generateImageUrl(l.icon)} />
+                  </a>
+                </Tooltip>
+              ))}
+            </Group>
             <Group>
-              {resume?.skills?.map((s) => (
-                <Tooltip label={s.name}>
+              {resume?.skills?.map((s, index) => (
+                <Tooltip label={s.name} key={index}>
                   <Image w="3em" src={generateImageUrl(s.icon)} />
                 </Tooltip>
               ))}

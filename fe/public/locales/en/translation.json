@@ -62,5 +62,21 @@
   "work-experiences": "Work Experiences",
   "add": "+ Add",
   "icon": "Icon",
-  "company": "Company"
+  "company": "Company",
+  "please-register-user-info-to-use-the-testimonial-feature": "Please register user info to use the testimonial feature",
+  "description-fr": "French Description",
+  "title-fr": "French Title",
+  "links": "Links:",
+  "testimonial-submitted-will-be-reviewed-and-approved-shortly": "Testimonial submitted, will be reviewed and approved shortly",
+  "please-login-before-leaving-testimonial1": "Please login before leaving a testimonial",
+  "leave-a-testimonial": "Leave a Testimonial",
+  "your-title-position": "Your title/position",
+  "executive-at-bigcorp": "Executive at BigCorp",
+  "your-comment": "Your comment",
+  "hes-good": "He's good",
+  "project-name": "Project Name",
+  "project-description": "Project Description",
+  "project-description-fr": "French Project Description",
+  "note-only-avatar-image-has-a-cache-policy-of-2-minutes-might-not-display-updated-content-right-away": "Note: Only avatar image has a cache policy of 2 minutes, might not display updated content right away.",
+  "view-on-l-label": "View on {{value}}"
 }

@@ -1,5 +1,7 @@
 package com.viktorkuts.portfolio_be.work.presentationlayer;
 
+import com.viktorkuts.portfolio_be.images.datalayer.Image;
+import com.viktorkuts.portfolio_be.images.datalayer.ImageRepository;
 import com.viktorkuts.portfolio_be.work.datalayer.Project;
 import com.viktorkuts.portfolio_be.work.logiclayer.ProjectService;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ProjectRequest;
@@ -8,18 +10,27 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.swing.*;
+
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/projects")
 public class ProjectController {
     private final ProjectService projectService;
+    private final ImageRepository imageRepository;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, ImageRepository imageRepository) {
         this.projectService = projectService;
+        this.imageRepository = imageRepository;
     }
 
     @GetMapping
     public Flux<Project> getAllProjects() {
         return projectService.getAllProjects();
+    }
+
+    @GetMapping("/link-icons")
+    public Flux<Image> getIcons(){
+        return imageRepository.getAllImagesInBucket("link-icons");
     }
 
     @GetMapping("/{projectId}")

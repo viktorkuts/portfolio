@@ -37,6 +37,12 @@ export interface Skill {
   icon: Image;
 }
 
+export interface ProfileLink {
+  url: string;
+  label: string;
+  icon: Image;
+}
+
 export const generateImageUrl = (image: Image | undefined): string => {
   if (!image) return "";
   return `${import.meta.env.VITE_MINIO_URL}/${image.bucket}/${image.id}`;

@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-
+import { useEffect, useState } from "react";
 import style from "./admindashboard.module.css";
 import {
   ActionIcon,
@@ -18,46 +17,64 @@ import { useCommentService } from "@/services/commentService";
 import { AdminWorkList } from "@/components/works/adminworklist";
 import { AdminSkills } from "@/components/skills/adminskills";
 import { AdminProfile } from "@/components/profile/adminprofile";
+import { useAuth0 } from "@auth0/auth0-react";
+import { AdminProjects } from "@/components/projects/adminprojects";
 
 export function AdminDashboard() {
   const { t } = useTranslation();
+  const { isAuthenticated } = useAuth0();
   const { testimonials, refresh } = useDataContext();
   const commentService = useCommentService();
 
   const [selectedTestimonialFilter, setTestimonialFilter] =
     useState<CommentStatus>(CommentStatus.APPROVED);
+  const [pendingTestimonials, setPendingTestimonials] = useState<
+    CommentResponse[]
+  >([]);
+  const [filteredTestimonials, setFilteredTestimonials] = useState<
+    CommentResponse[] | undefined
+  >([]);
+  const [loadingIds, setLoadingIds] = useState<string[]>([]);
 
-  const [pendingTestimonials, setPendingTestimonials] =
-    useState<CommentResponse[]>();
-
-  const choosen = useRef(testimonials);
-
-  const fetchPendingTestimonials = async () =>
-    setPendingTestimonials(await commentService.getPendingTestimonials());
+  const fetchPendingTestimonials = async () => {
+    const pending = await commentService.getPendingTestimonials();
+    setPendingTestimonials(pending);
+  };
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     refresh();
     fetchPendingTestimonials();
-    if (selectedTestimonialFilter == CommentStatus.APPROVED) {
-      choosen.current = testimonials;
-    } else {
-      choosen.current = pendingTestimonials;
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTestimonialFilter]);
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (selectedTestimonialFilter === CommentStatus.APPROVED) {
+      setFilteredTestimonials(testimonials);
+    } else {
+      setFilteredTestimonials(pendingTestimonials);
+    }
+  }, [selectedTestimonialFilter, testimonials, pendingTestimonials]);
 
   const approveComment = async (commentId: string) => {
     await commentService.approveTestimonial(commentId);
+    refresh();
+    await fetchPendingTestimonials();
+    setLoadingIds((prev) => prev.filter((e) => e != commentId));
   };
 
   const deleteComment = async (commentId: string) => {
     await commentService.deleteTestimonial(commentId);
+    refresh();
+    await fetchPendingTestimonials();
+    setLoadingIds((prev) => prev.filter((e) => e != commentId));
   };
 
   return (
     <Stack className={style.dashboard}>
       <Title>{t("admin-dashboard")}</Title>
       <AdminProfile />
+      <AdminProjects />
       <AdminWorkList style={style} />
       <Card>
         <Title>{t("testimonials-0")}</Title>
@@ -72,7 +89,7 @@ export function AdminDashboard() {
               CommentStatus[val as keyof typeof CommentStatus]
             );
           }}
-        ></Select>
+        />
         <Table.ScrollContainer minWidth={800}>
           <Table verticalSpacing="md">
             <Table.Thead>
@@ -85,8 +102,8 @@ export function AdminDashboard() {
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
-              {choosen.current?.map((t) => (
-                <Table.Tr>
+              {filteredTestimonials?.map((t) => (
+                <Table.Tr key={t.id}>
                   <Table.Th>
                     <Group>
                       {t.user.userInfo.firstName} {t.user.userInfo.lastName}
@@ -103,29 +120,22 @@ export function AdminDashboard() {
                           variant="subtle"
                           color="green"
                           onClick={() => {
+                            setLoadingIds((prev) => [...prev, t.id]);
                             approveComment(t.id);
-                            fetchPendingTestimonials();
-                            refresh();
-                            setTimeout(() => {
-                              window.location.reload();
-                            }, 500);
                           }}
+                          loading={loadingIds.includes(t.id)}
                         >
                           <IconCheck size={16} stroke={1.5} />
                         </ActionIcon>
                       )}
-
                       <ActionIcon
                         variant="subtle"
                         color="red"
                         onClick={() => {
+                          setLoadingIds((prev) => [...prev, t.id]);
                           deleteComment(t.id);
-                          fetchPendingTestimonials();
-                          refresh();
-                          setTimeout(() => {
-                            window.location.reload();
-                          }, 500);
                         }}
+                        loading={loadingIds.includes(t.id)}
                       >
                         <IconTrash size={16} stroke={1.5} />
                       </ActionIcon>

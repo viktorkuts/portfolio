@@ -4,6 +4,7 @@ import com.viktorkuts.portfolio_be.utils.exceptions.NotFoundException;
 import com.viktorkuts.portfolio_be.work.datalayer.Project;
 import com.viktorkuts.portfolio_be.work.datalayer.ProjectRepository;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ProjectRequest;
+import com.viktorkuts.portfolio_be.work.presentationlayer.models.ProjectResponse;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -32,8 +33,10 @@ public class ProjectServiceImpl implements ProjectService {
                 .map(p -> {
                     p.setName(projectRequest.getName());
                     p.setDescription(projectRequest.getDescription());
+                    p.setDescriptionFr(projectRequest.getDescriptionFr());
                     p.setLinks(projectRequest.getLinks());
                     p.setImage(projectRequest.getImage());
+                    p.setSkills(projectRequest.getSkills());
                     return p;
                 })
                 .flatMap(projectRepository::save);
@@ -46,8 +49,10 @@ public class ProjectServiceImpl implements ProjectService {
                     p.id(UUID.randomUUID().toString());
                     p.name(projectRequest.getName());
                     p.description(projectRequest.getDescription());
+                    p.descriptionFr(projectRequest.getDescriptionFr());
                     p.links(projectRequest.getLinks());
                     p.image(projectRequest.getImage());
+                    p.skills(projectRequest.getSkills());
                     return p.build();
                 })
                 .flatMap(projectRepository::save);

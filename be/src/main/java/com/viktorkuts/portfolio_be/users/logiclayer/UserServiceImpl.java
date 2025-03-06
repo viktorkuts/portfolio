@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
                 .map(req -> User.builder()
                         .id(UUID.randomUUID().toString())
                         .email(req.getEmail())
-                        .type(UserType.USER)
+                        .type(UserType.GUEST)
                         .userInfo(UserInfo.builder()
                                 .firstName(req.getFirstName())
                                 .lastName(req.getLastName())

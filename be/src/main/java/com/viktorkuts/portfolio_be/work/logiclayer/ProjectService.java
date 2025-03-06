@@ -3,6 +3,7 @@ package com.viktorkuts.portfolio_be.work.logiclayer;
 import com.viktorkuts.portfolio_be.images.datalayer.Image;
 import com.viktorkuts.portfolio_be.work.datalayer.Project;
 import com.viktorkuts.portfolio_be.work.presentationlayer.models.ProjectRequest;
+import com.viktorkuts.portfolio_be.work.presentationlayer.models.ProjectResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   Avatar,
   Badge,
   Button,
@@ -11,11 +12,14 @@ import {
   Space,
   Text,
   Title,
+  Tooltip,
 } from "@mantine/core";
 import { useDataContext } from "@/utils/dataprovider";
 import { useTranslation } from "react-i18next";
 import { generateImageUrl } from "@/utils/models/Shared";
-import { IconBriefcase } from "@tabler/icons-react";
+import { IconBriefcase, IconNotebook } from "@tabler/icons-react";
+import { ProjectResponse } from "@/utils/models/Projects";
+import { Key } from "react";
 
 export const HomeRenderer = () => {
   const { t, i18n } = useTranslation();
@@ -23,10 +27,89 @@ export const HomeRenderer = () => {
   return (
     <div style={{ width: "100%" }}>
       <Container>
+        <Title>{t("projects")}</Title>
+        <Divider size="sm" w="100%" />
+        <Space />
+        <Grid p="md" grow gutter="lg" ta="left">
+          {resume?.projects.length == 0 && (
+            <Card w="100%">
+              <Center>{t("no-projects-yet")}</Center>
+            </Card>
+          )}
+          {resume?.projects?.map((project: ProjectResponse, index: Key) => (
+            <Grid.Col key={index} span={12}>
+              <Card shadow="lg" padding="lg" radius="md" withBorder>
+                <Card.Section>
+                  <Center
+                    bg="linear-gradient(#232323, #050505)"
+                    h="15vh"
+                    mb="lg"
+                  >
+                    <Avatar
+                      variant="gradient"
+                      radius="15em"
+                      size="7em"
+                      src={generateImageUrl(project.image)}
+                    >
+                      <IconNotebook size={50} />
+                    </Avatar>
+                  </Center>
+                </Card.Section>
+                <Title order={2}>{project.name}</Title>
+                <Text>
+                  {i18n.language == "fr" && project.descriptionFr
+                    ? project.descriptionFr
+                    : project.description}
+                </Text>
+                {project.skills.length >= 1 && (
+                  <Text mt="lg">{t("links")}</Text>
+                )}
+                {project.links.map((l, index) => (
+                  <Tooltip
+                    label={t("view-on-l-label", { value: l.label })}
+                    key={index}
+                  >
+                    <ActionIcon
+                      variant="primary"
+                      component="a"
+                      href={l.url}
+                      target="_blank"
+                    >
+                      <Image w="1.5em" src={generateImageUrl(l.icon)} />
+                    </ActionIcon>
+                  </Tooltip>
+                ))}
+                {project.skills.length >= 1 && (
+                  <Text mt="lg">{t("technologies-used")}</Text>
+                )}
+                {project?.skills.map((s) => (
+                  <Badge
+                    color="black"
+                    mb="0.5em"
+                    key={s.id}
+                    size="xl"
+                    leftSection={
+                      <Image w="1.5em" src={generateImageUrl(s.icon)} />
+                    }
+                  >
+                    {s.name}
+                  </Badge>
+                ))}
+              </Card>
+            </Grid.Col>
+          ))}
+        </Grid>
+      </Container>
+      <Container>
         <Title>{t("work-experince")}</Title>
         <Divider size="sm" w="100%" />
         <Space />
         <Grid p="md" grow gutter="lg" ta="left">
+          {resume?.works.length == 0 && (
+            <Card w="100%">
+              <Center>{t("no-work-experience-yet")}</Center>
+            </Card>
+          )}
           {resume?.works.map((work, index) => (
             <Grid.Col key={index} span={12}>
               <Card shadow="lg" padding="lg" radius="md" withBorder>
@@ -87,133 +170,25 @@ export const HomeRenderer = () => {
         </Button>
         <Divider size="sm" w="100%" />
         <Space />
-        <Grid p="md" grow gutter="lg" ta="left" w="100%">
+        <Grid p="md" gutter="md" ta="left" w="100%">
           {(!testimonials || testimonials.length == 0) && (
             <Card w="100%">
               <Center w="100%">{t("no-testimonials-yet")}</Center>
             </Card>
           )}
           {testimonials?.map((t) => (
-            <Card w="100%">
-              <Card.Section>
-                <Text>
+            <Grid.Col>
+              <Card w="100%">
+                <Title order={4}>
                   {t.user.userInfo.firstName} {t.user.userInfo.lastName}
-                </Text>
-                <Text>{t.title}</Text>
-              </Card.Section>
-              <Title>{t.comment}</Title>
-            </Card>
-          ))}
-        </Grid>
-      </Container>
-      {/* <Container h="calc(100vh - 56px)">
-        <Title>Projects</Title>
-        <Divider size="sm" w="100%" />
-        <Space />
-        <Grid p="md" grow gutter="lg" ta="left">
-          {resume?.works.map((work, index) => (
-            <Grid.Col key={index} span={isMobile ? 12 : 2}>
-              <Card shadow="lg" padding="lg" radius="md" withBorder>
-                <Card.Section>
-                  <Center
-                    bg="linear-gradient(#232323, #050505)"
-                    h="15vh"
-                    mb="lg"
-                  >
-                    <Avatar
-                      variant="gradient"
-                      radius="15em"
-                      size="7em"
-                      src={generateImageUrl(work.image)}
-                    >
-                      <IconBriefcase size={50} />
-                    </Avatar>
-                  </Center>
-                </Card.Section>
-                <Title order={2}>{work.position}</Title>
-                <Text>At {work.company.name}</Text>
-                <Text mb="lg">
-                  {work?.functionStart?.toDateString()}{" "}
-                  {work?.functionEnd?.toDateString() || "Present"}
-                </Text>
-                <Text>{work.description}</Text>
-                {work.skills.length >= 1 && (
-                  <Text mt="lg">Technologies used:</Text>
-                )}
-                {work?.skills.map((s) => (
-                  <Badge
-                    key={s.id}
-                    size="xl"
-                    leftSection={
-                      <Image w="2em" src={generateImageUrl(s.icon)} />
-                    }
-                  >
-                    {s.name}
-                  </Badge>
-                ))}
+                </Title>
+                <Text mb="md">{t.title}</Text>
+                <Text>{t.comment}</Text>
               </Card>
             </Grid.Col>
           ))}
         </Grid>
-      </Container> */}
+      </Container>
     </div>
   );
-  // return (
-  //   <Stack w="100%" justify="center">
-  //     <Card className={style.card}>
-  //       <Title>{t("work-experience")}</Title>
-  //       <Divider size="sm" w="100%" />
-  //       <Accordion defaultValue={t("no-work-experience-yet")} w="100%">
-  //         {(!resume || !resume?.works || resume.works.length < 1) && (
-  //           <Title order={5}>{t("no-work-experience-yet")}</Title>
-  //         )}
-  //         {resume?.works.map((work, index) => (
-  //           <Accordion.Item key={index} value={work?.position}>
-  //             <Accordion.Control>
-  //               <Group wrap="nowrap">
-  //                 <div>
-  //                   <Text>{work.position}</Text>
-  //                   <Text size="sm" c="dimmed" fw={400}>
-  //                     {work?.company?.name}
-  //                   </Text>
-  //                 </div>
-  //               </Group>
-  //             </Accordion.Control>
-  //             <Accordion.Panel>{work.description}</Accordion.Panel>
-  //           </Accordion.Item>
-  //         ))}
-  //       </Accordion>
-  //     </Card>
-  //     <Card className={style.card}>
-  //       <Title>{t("projects")}</Title>
-  //       <Divider size="sm" w="100%" />
-  //       {(!resume || resume.works.length < 1) && (
-  //         <Title order={5}>{t("no-projects-yet")}</Title>
-  //       )}
-  //     </Card>
-  //     <Card className={style.card}>
-  //       <Title>{t("testimonials")}</Title>
-  //       <Button component="a" href="/testimonial">
-  //         {t("add-testimonial")}
-  //       </Button>
-  //       <Divider size="sm" w="100%" />
-  //       {!testimonials || testimonials?.length < 1 ? (
-  //         <Title order={5}>{t("no-public-testimonials-yet")}</Title>
-  //       ) : (
-  //         <Stack w="100%">
-  //           {testimonials?.map((testimonial) => (
-  //             <Card w="100%">
-  //               <Title order={5}>
-  //                 {testimonial.user.userInfo.firstName}{" "}
-  //                 {testimonial.user.userInfo.lastName}
-  //               </Title>
-  //               <Text>{testimonial.title}</Text>
-  //               <Text>{testimonial.comment}</Text>
-  //             </Card>
-  //           ))}
-  //         </Stack>
-  //       )}
-  //     </Card>
-  //   </Stack>
-  // );
 };

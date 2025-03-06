@@ -48,11 +48,12 @@ export function Navbar() {
 
   const debouncedOpened = useDebouncedState(opened, 100);
 
-  const [isEnglish, setIsEnglish] = useState<boolean>();
+  const [isEnglish, setIsEnglish] = useState<boolean>(i18n.language == "en");
 
   useEffect(() => {
     i18n.changeLanguage(isEnglish ? "en" : "fr");
-  }, [i18n, isEnglish]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEnglish]);
 
   const items = links.map((link) => (
     <a

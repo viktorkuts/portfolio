@@ -188,7 +188,7 @@ export const AdminWorkList = ({ style }: Props) => {
             });
           })}
         >
-          {formAddWork.getValues().image && (
+          {formAddWork.getValues().image.id && (
             <Image
               src={generateImageUrl(formAddWork.getValues().image)}
               h="1em"

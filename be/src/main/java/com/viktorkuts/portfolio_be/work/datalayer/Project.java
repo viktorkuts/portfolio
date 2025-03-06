@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document("projects")
@@ -20,6 +21,10 @@ public class Project {
     private String id;
     private String name;
     private String description;
-    private List<ProfileLink> links;
+    private String descriptionFr;
+    @Builder.Default
+    private List<ProfileLink> links = new ArrayList<>();
+    @Builder.Default
+    private List<String> skills = new ArrayList<>();
     private Image image;
 }

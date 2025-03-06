@@ -62,5 +62,21 @@
   "technologies": "Technologies",
   "upload": "Télécharger",
   "upload-image": "Télécharger l'image",
-  "work-experiences": "Expériences de travail"
+  "work-experiences": "Expériences de travail",
+  "please-register-user-info-to-use-the-testimonial-feature": "Veuillez enregistrer les informations utilisateur pour utiliser la fonction de témoignage",
+  "description-fr": "Description française",
+  "title-fr": "Titre français",
+  "links": "Liens:",
+  "executive-at-bigcorp": "Executive chez BigCorp",
+  "hes-good": "Il est bon",
+  "leave-a-testimonial": "Laisser un témoignage",
+  "please-login-before-leaving-testimonial1": "Veuillez vous connecter avant de laisser un témoignage",
+  "testimonial-submitted-will-be-reviewed-and-approved-shortly": "Le témoignage soumis, sera examiné et approuvé sous peu",
+  "your-comment": "Votre commentaire",
+  "your-title-position": "Votre titre / position",
+  "note-only-avatar-image-has-a-cache-policy-of-2-minutes-might-not-display-updated-content-right-away": "Remarque: seule l'image Avatar a une politique de cache de 2 minutes, peut ne pas afficher le contenu mis à jour immédiatement.",
+  "project-description": "Description du projet",
+  "project-description-fr": "Description du projet français",
+  "project-name": "Nom du projet",
+  "view-on-l-label": "Voir sur {{value}}"
 }

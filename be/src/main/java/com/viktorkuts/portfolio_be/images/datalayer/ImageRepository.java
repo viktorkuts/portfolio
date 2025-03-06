@@ -2,7 +2,9 @@ package com.viktorkuts.portfolio_be.images.datalayer;
 
 import com.viktorkuts.portfolio_be.utils.exceptions.NotFoundException;
 import io.minio.*;
+import io.minio.errors.*;
 import io.minio.messages.Bucket;
+import io.minio.messages.Item;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.codec.multipart.FilePart;
@@ -14,7 +16,11 @@ import reactor.core.scheduler.Schedulers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
 import java.util.UUID;
 
 @Service
@@ -37,6 +43,29 @@ public class ImageRepository {
                 sink.error(e);
             }
         });
+    }
+
+    public Flux<Image> getAllImagesInBucket(String bucketName) {
+        return Flux.create(sink -> {
+            try {
+                ListObjectsArgs args = ListObjectsArgs.builder()
+                        .bucket(bucketName)
+                        .build();
+                for (Result<Item> result : minioClient.listObjects(args)) {
+                    try {
+                        Item item = result.get();
+                        Image image = new Image(item.objectName(), bucketName);
+                        sink.next(image);
+                    } catch (Exception e) {
+                        sink.error(e);
+                    }
+                }
+                sink.complete();
+            } catch (Exception e) {
+                sink.error(e);
+            }
+        });
+
     }
 
 

@@ -84,7 +84,6 @@ export const AdminSkills = () => {
               <Table.Th>Icon</Table.Th>
               <Table.Th>Name</Table.Th>
               <Table.Th>Id</Table.Th>
-              <Table.Th>Actions</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>

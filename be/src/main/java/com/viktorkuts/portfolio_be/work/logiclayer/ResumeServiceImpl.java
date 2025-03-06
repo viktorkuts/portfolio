@@ -60,6 +60,15 @@ public class ResumeServiceImpl implements ResumeService {
                         })
                 )
                 .flatMap(r -> projectService.getAllProjects()
+                        .flatMap(p -> Flux.fromIterable(p.getSkills())
+                        .flatMap(skillService::getSkillById)
+                        .collectList()
+                        .map(s -> {
+                            ProjectResponse projectResponse = new ProjectResponse();
+                            BeanUtils.copyProperties(p, projectResponse);
+                            projectResponse.setSkills(s);
+                            return projectResponse;
+                        }))
                         .collectList()
                         .map(p -> {
                             r.setProjects(p);
@@ -105,7 +114,10 @@ public class ResumeServiceImpl implements ResumeService {
         return getMainResume()
                 .map(r -> {
                     r.setTitle(patch.getTitle());
+                    r.setTitleFr(patch.getTitleFr());
                     r.setDescription(patch.getDescription());
+                    r.setDescriptionFr(patch.getDescriptionFr());
+                    r.setLinks(patch.getLinks());
                     return r;
                 })
                 .flatMap(resumeRepository::save);
