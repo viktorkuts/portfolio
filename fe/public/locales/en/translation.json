@@ -79,5 +79,6 @@
   "project-description-fr": "French Project Description",
   "note-only-avatar-image-has-a-cache-policy-of-2-minutes-might-not-display-updated-content-right-away": "Note: Only avatar image has a cache policy of 2 minutes, might not display updated content right away.",
   "view-on-l-label": "View on {{value}}",
-  "skills": "Skills"
+  "skills": "Skills",
+  "skill": "Skill"
 }
