@@ -78,5 +78,6 @@
   "project-description": "Description du projet",
   "project-description-fr": "Description du projet français",
   "project-name": "Nom du projet",
-  "view-on-l-label": "Voir sur {{value}}"
+  "view-on-l-label": "Voir sur {{value}}",
+  "skills": "Compétences"
 }

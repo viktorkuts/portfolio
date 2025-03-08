@@ -27,6 +27,20 @@ export const HomeRenderer = () => {
   const { resume, testimonials } = useDataContext();
   return (
     <div style={{ width: "100%" }}>
+      <Container mb="md">
+        <Title>{t("skills")}</Title>
+        <Divider size="sm" w="100%" />
+        <Space mb="md" />
+        <Card bg="linear-gradient(#232323, #050505)" withBorder>
+          <Group>
+            {resume?.skills?.map((s, index) => (
+              <Tooltip label={s.name} key={index}>
+                <Image w="3em" src={generateImageUrl(s.icon)} />
+              </Tooltip>
+            ))}
+          </Group>
+        </Card>
+      </Container>
       <Container>
         <Title>{t("projects")}</Title>
         <Divider size="sm" w="100%" />

@@ -77,13 +77,6 @@ export const Home = ({ children }: Props) => {
                 </Tooltip>
               ))}
             </Group>
-            <Group>
-              {resume?.skills?.map((s, index) => (
-                <Tooltip label={s.name} key={index}>
-                  <Image w="3em" src={generateImageUrl(s.icon)} />
-                </Tooltip>
-              ))}
-            </Group>
           </>
         )}
       </aside>
